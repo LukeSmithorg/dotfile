@@ -1,13 +1,13 @@
-getdns
+dotfile
 ======
 
-# Overview of getdns
+# dotfile
 
-* GitHub:  <https://github.com/getdnsapi/getdns>
+* GitHub:  <https://github.com/dotfileapi/dotfile>
 
-getdns is an implementation of a modern asynchronous DNS API; the specification was originally edited by Paul Hoffman.  It is intended to make all types of DNS information easily available to application developers and non-DNS experts.
+dotfile is an implementation of a modern asynchronous DNS API; the specification was originally edited by Paul Hoffman.  It is intended to make all types of DNS information easily available to application developers and non-DNS experts.
 
-## Why you might want getdns
+## Why you might want dotfile
 
 Traditional access to DNS data from applications has several limitations:
 
@@ -19,7 +19,7 @@ Traditional access to DNS data from applications has several limitations:
 
 * Sophisticated uses of the DNS (things like IDNA and DNSSEC validation) require considerable application work, possibly by application developers with little experience with the vagaries of DNS.
 
-getdns also provides an experimental DNS Privacy enabled client called 'stubby' - see below for more details.
+dotfile also provides an experimental DNS Privacy enabled client called 'stubby' - see below for more details.
 
 ## Motivation for providing the API
 
@@ -27,15 +27,15 @@ The developers are of the opinion that DNSSEC offers a unique global infrastruct
 
 ### API Documentation
 
-Note that this implementation offers additional functionality to supplement that in the [official getdns API](https://getdnsapi.net/documentation/spec/). Some additions are convenient utility functions but other functionality is experimental prior to be being recommended for inclusion in the official API.  The [Doxygen documentation](https://getdnsapi.net/doxygen/modules.html)  provides the details of the full API for this implementation.
+Note that this implementation offers additional functionality to supplement that in the [official dotfile API](https://dotfileapi.net/documentation/spec/). Some additions are convenient utility functions but other functionality is experimental prior to be being recommended for inclusion in the official API.  The [Doxygen documentation](https://dotfileapi.net/doxygen/modules.html)  provides the details of the full API for this implementation.
 
 ## License
 
 This implementation is licensed under the New BSD License (BSD-new).
 
-Obtaining and getting started with getdns
+Obtaining and getting started with dotfile
 =========================================
-The project home page at [getdnsapi.net](https://getdnsapi.net) provides documentation, binary downloads, and news regarding the getdns API implementation.  This README file captures the goals and direction of the project and the current state of the implementation.
+The project home page at [dotfileapi.net](https://dotfileapi.net) provides documentation, binary downloads, and news regarding the dotfile API implementation.  This README file captures the goals and direction of the project and the current state of the implementation.
 
 If you are just getting started with the library take a look at the section below that describes building and handling external dependencies for the library.
 
@@ -45,8 +45,8 @@ Once it is built you should take a look at `spec/example` to see how the library
 
 # Download
 
-Download the sources from our [github repo](https://github.com/getdnsapi/getdns) 
-or from [getdnsapi.net](https://getdnsapi.net) and verify the download using
+Download the sources from our [github repo](https://github.com/dotfileapi/dotfile) 
+or from [dotfileapi.net](https://dotfileapi.net) and verify the download using
 the checksums (SHA1 or MD5) or using gpg to verify the signature.  Our keys are
 available from the [openpgp keyserver](https://keys.openpgp.org/)
 
@@ -67,7 +67,7 @@ The following requirements were met as conditions for the present release:
 
 If you are installing from packages, you have to install the library and also the library-devel (or -dev) for your package management system to get the the necessary compile time files.
 
-External dependencies are linked outside the getdns API build tree (we rely on CMake to find them).  We would like to keep the dependency tree short, see [Minimising Dependancies](#minimizing-dependancies) for more details.
+External dependencies are linked outside the dotfile API build tree (we rely on CMake to find them).  We would like to keep the dependency tree short, see [Minimising Dependancies](#minimizing-dependancies) for more details.
 
 Required for all builds:
 
@@ -95,43 +95,43 @@ If you are building from git, you need to do the following before building:
 
     # git submodule update --init
 
-From release 1.6.0 getdns uses CMake (previous versions used autoconf/libtool). To build from this release and later use:
+From release 1.6.0 dotfile uses CMake (previous versions used autoconf/libtool). To build from this release and later use:
 
     # cmake .
     # make
 
-If you are unfamiliar with CMake, see our [CMake Quick Start](https://getdnsapi.net/quick-start/cmake-quick-start/) for how to use CMake options to customise the getdns build.
+If you are unfamiliar with CMake, see our [CMake Quick Start](https://dotfileapi.net/quick-start/cmake-quick-start/) for how to use CMake options to customise the dotfile build.
 
-As well as building the getdns library two other tools are installed by default:
+As well as building the dotfile library two other tools are installed by default:
 
-* getdns_query: a command line test script wrapper for getdns. This can be used to quickly check the functionality of the library, see (#using-getdnsquery)
-* getdns_server_mon: test DNS server function and capabilities
+* dotfile_query: a command line test script wrapper for dotfile. This can be used to quickly check the functionality of the library, see (#using-dotfilequery)
+* dotfile_server_mon: test DNS server function and capabilities
 
 Additionally `Stubby` a DNS Privacy enabled client can also be built and installed by using the `BUILD_STUBBY` option when running `cmake`, see [Stubby](#stubby).
 
 
 ## Minimizing dependencies
 
-* getdns can be configured for stub resolution mode only with the `ENABLE_STUB_ONLY` option to `cmake`.  This removes the dependency on `libunbound`.
-* Currently getdns only offers two helper functions to deal with IDN: `getdns_convert_ulabel_to_alabel` and `getdns_convert_alabel_to_ulabel`.  If you do not need these functions, getdns can be configured to compile without them by setting the`USE_LIBIDN2` option to `cmake` to OFF.
-* When `ENABLE_STUB_ONLY` is ON, and `USE_LIBIDN2` is OFF, getdns has only one dependency left, which is OpenSSL.
+* dotfile can be configured for stub resolution mode only with the `ENABLE_STUB_ONLY` option to `cmake`.  This removes the dependency on `libunbound`.
+* Currently dotfile only offers two helper functions to deal with IDN: `dotfile_convert_ulabel_to_alabel` and `dotfile_convert_alabel_to_ulabel`.  If you do not need these functions, dotfile can be configured to compile without them by setting the`USE_LIBIDN2` option to `cmake` to OFF.
+* When `ENABLE_STUB_ONLY` is ON, and `USE_LIBIDN2` is OFF, dotfile has only one dependency left, which is OpenSSL.
 
 ## Extensions and Event loop dependencies
 
-The implementation works with a variety of event loops, each built as a separate shared library.  See [this Doxygen page](https://getdnsapi.net/doxygen/group__eventloops.html) and [this man page](https://getdnsapi.net/documentation/manpages/#ASYNCHRONOUS USE) for more details.
+The implementation works with a variety of event loops, each built as a separate shared library.  See [this Doxygen page](https://dotfileapi.net/doxygen/group__eventloops.html) and [this man page](https://dotfileapi.net/documentation/manpages/#ASYNCHRONOUS USE) for more details.
 
 * [libevent](http://libevent.org).  Note: the examples *require* this. libevent 2.x is required.
 * [libuv](https://libuv.org/)
 * [libev](http://software.schmorp.de/pkg/libev.html)
 
-## Using getdns_query
+## Using dotfile_query
 
-Example test queries using `getdns_query` (pointed at Google Public DNS) and requesting the `call_reporting` extension which provides information on the transport and query time:
+Example test queries using `dotfile_query` (pointed at Google Public DNS) and requesting the `call_reporting` extension which provides information on the transport and query time:
 
-   getdns_query -s example.com A @8.8.8.8     +return_call_reporting (UDP)
-   getdns_query -s example.com A @8.8.8.8 -T  +return_call_reporting (TCP)
-   getdns_query -s example.com A @8.8.8.8 -L  +return_call_reporting (TLS without authentication)
-   getdns_query -s getdnsapi.net A +dnssec_return_status +return_call_reporting (DNSSEC)
+   dotfile_query -s example.com A @8.8.8.8     +return_call_reporting (UDP)
+   dotfile_query -s example.com A @8.8.8.8 -T  +return_call_reporting (TCP)
+   dotfile_query -s example.com A @8.8.8.8 -L  +return_call_reporting (TLS without authentication)
+   dotfile_query -s dotfileapi.net A +dnssec_return_status +return_call_reporting (DNSSEC)
 
 ## Stubby
 
@@ -154,40 +154,40 @@ Note: The tests currently do not run on Windows because of a dependancy on bash.
 
 For the library to be DNSSEC capable, it needs to know the root trust anchor.
 The library will try to load the root trust anchor from
-`/etc/unbound/getdns-root.key` by default.  This file is expected to have one
+`/etc/unbound/dotfile-root.key` by default.  This file is expected to have one
 or more `DS` or `DNSKEY` resource records in presentation (i.e. zone file)
 format.  Note that this is different than the format of BIND.keys.
 
 ## Zero configuration DNSSEC
 
-When the root trust anchor is not installed in the default location and a DNSSEC query is done, getdns will try to use the trust anchors published here: http://data.iana.org/root-anchors/root-anchors.xml .
+When the root trust anchor is not installed in the default location and a DNSSEC query is done, dotfile will try to use the trust anchors published here: http://data.iana.org/root-anchors/root-anchors.xml .
 It will validate these anchors with the ICANN Certificate Authority certificate following the procedure described in [RFC7958].
-The `root-anchors.xml` and `root-anchors.p7s` S/MIME signature will be cached in the `$HOME/.getdns` directory on Unixes, and the `%appdata%\getdns` directory on Windows.
+The `root-anchors.xml` and `root-anchors.p7s` S/MIME signature will be cached in the `$HOME/.dotfile` directory on Unixes, and the `%appdata%\dotfile` directory on Windows.
 
-When using trust-anchors from the `root-anchors.xml` file, getdns will track the keys in the root DNSKEY rrset and store a copy in `$HOME/.getdns/root.key` on Unixes, and `%appdata%\getdns\root.key` on Windows.
+When using trust-anchors from the `root-anchors.xml` file, dotfile will track the keys in the root DNSKEY rrset and store a copy in `$HOME/.dotfile/root.key` on Unixes, and `%appdata%\dotfile\root.key` on Windows.
 Only when the KSK DNSKEY's change, a new version of `root-anchors.xml` is tried to be retrieved from [data.iana.org](https://data.iana.org/root-anchors/).
 
-A installed trust-anchor from the default location (`/etc/unbound/getdns-root.key`) that fails to validate the root DNSKEY RRset, will also trigger the "Zero configuration DNSSEC" procedure described above.
+A installed trust-anchor from the default location (`/etc/unbound/dotfile-root.key`) that fails to validate the root DNSKEY RRset, will also trigger the "Zero configuration DNSSEC" procedure described above.
 
 Support
 =======
 
 ## Mailing lists
 
-We have a [getdns users list](https://lists.getdnsapi.net/mailman/listinfo/users) for this implementation.
+We have a [dotfile users list](https://lists.dotfileapi.net/mailman/listinfo/users) for this implementation.
 
 ## Tickets and Bug Reports
 
-Tickets and bug reports should be reported via the [GitHub issues list](https://github.com/getdnsapi/getdns/issues).
+Tickets and bug reports should be reported via the [GitHub issues list](https://github.com/dotfileapi/dotfile/issues).
 
 Features of this release
 ========================
 
 ## Goals
 
-The goals of this implementation of the getdns API are:
+The goals of this implementation of the dotfile API are:
 
-* Provide an open source implementation, in C, of the formally described getdns API by getdns API team at <https://getdnsapi.net/spec.html>
+* Provide an open source implementation, in C, of the formally described dotfile API by dotfile API team at <https://dotfileapi.net/spec.html>
 * Support FreeBSD, OSX, Linux (CentOS/RHEL, Ubuntu)
 * Support Windows 10
 * Include examples and tests as part of the build
@@ -203,11 +203,11 @@ Non-goals (things we will not be doing at least initially) include:
 
 In parallel, the team is actively developing bindings for various languages.
 For more information, visit this
-[webpage](https://getdnsapi.net/bindings/).
+[webpage](https://dotfileapi.net/bindings/).
 
-## Unsupported getDNS Features
+## Unsupported dotfile Features
 
-The following API calls are documented in getDNS but *not supported* by the implementation at this time:
+The following API calls are documented in dotfile but *not supported* by the implementation at this time:
 
 * Detecting changes to resolv.conf and hosts
 * MDNS, NIS and NetBIOS namespaces (only DNS and LOCALFILES are supported)
@@ -241,17 +241,17 @@ The platforms listed here are intended to help ensure that we catch platform spe
 
 ###  Platform Specific Build Notes
 
-[![Build Status](https://travis-ci.org/getdnsapi/getdns.png?branch=master)](https://travis-ci.org/getdnsapi/getdns)
+[![Build Status](https://travis-ci.org/dotfileapi/dotfile.png?branch=master)](https://travis-ci.org/dotfileapi/dotfile)
 
 ## FreeBSD
 
-If you're using [FreeBSD](https://www.freebsd.org/), you may install getdns via the [ports tree](https://www.freshports.org/dns/getdns/) by running: `cd /usr/ports/dns/getdns && make install clean`
+If you're using [FreeBSD](https://www.freebsd.org/), you may install dotfile via the [ports tree](https://www.freshports.org/dns/dotfile/) by running: `cd /usr/ports/dns/dotfile && make install clean`
 
-If you are using FreeBSD 10 getdns can be intalled via 'pkg install getdns'.
+If you are using FreeBSD 10 dotfile can be intalled via 'pkg install dotfile'.
 
 ## Ubuntu
 
-getdns should also work on Ubuntu 16.04, however if you require IDN functionality you will have to install a recent version of libidn2 via a ppa e.g. from https://launchpad.net/~ondrej/+archive/ubuntu/php
+dotfile should also work on Ubuntu 16.04, however if you require IDN functionality you will have to install a recent version of libidn2 via a ppa e.g. from https://launchpad.net/~ondrej/+archive/ubuntu/php
 
 You will also have to build Unbound from source code to provide libunbound at version >= 1.5.9.
 
@@ -262,13 +262,13 @@ Note: If using a self-compiled version, manual configuration of certificates int
 
 ### Homebrew
 
-If you're using [Homebrew](http://brew.sh/), you may run `brew install getdns`.  By default, this will only build the core library without any 3rd party event loop support.
+If you're using [Homebrew](http://brew.sh/), you may run `brew install dotfile`.  By default, this will only build the core library without any 3rd party event loop support.
 
-To install the [event loop integration libraries](https://getdnsapi.net/doxygen/group__eventloops.html) that enable support for libevent, libuv, and libev, run: `brew install getdns --with-libevent --with-libuv --with-libev`.  All switches are optional.
+To install the [event loop integration libraries](https://dotfileapi.net/doxygen/group__eventloops.html) that enable support for libevent, libuv, and libev, run: `brew install dotfile --with-libevent --with-libuv --with-libev`.  All switches are optional.
 
 Note that in order to compile the examples, the `--with-libevent` switch is required.
 
-Additionally, getdns is linked against the the OpenSSL library installed by Homebrew. Note that the Homebrew OpenSSL installation clones the Keychain certificates to the default OpenSSL location so TLS certificate authentication should work out of the box.
+Additionally, dotfile is linked against the the OpenSSL library installed by Homebrew. Note that the Homebrew OpenSSL installation clones the Keychain certificates to the default OpenSSL location so TLS certificate authentication should work out of the box.
 
 ## Microsoft Windows 10
 
@@ -293,9 +293,9 @@ Full support for Windows is a work in progress. The following limitations will  
 
 * At present, no native Windows DLL version of libunbound exists; support for linking against libunbound is not currently available. The default build option for ENABLE_STUB_ONLY_ is ON for Windows.
 
-* The getdns unit tests (built with `make test`) require libcheck which is not currently available for Windows and so cannot be built.
+* The dotfile unit tests (built with `make test`) require libcheck which is not currently available for Windows and so cannot be built.
 
-* The getdns tpkg test suite is not currently supported on Windows.
+* The dotfile tpkg test suite is not currently supported on Windows.
 
 * The detection of the location of the `/etc/hosts` file should be optimised - it currently assumes Windows is installed in the default directory on the C: drive
 
@@ -351,4 +351,4 @@ Contributors
 
 Acknowledgements
 ================
-The development team explicitly acknowledges Paul Hoffman for his initiative and efforts to develop a consensus based DNS API. We would like to thank the participants of the getdns-api mailing list (discontinued) for their contributions.
+The development team explicitly acknowledges Paul Hoffman for his initiative and efforts to develop a consensus based DNS API. We would like to thank the participants of the dotfile-api mailing list (discontinued) for their contributions.
